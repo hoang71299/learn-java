@@ -1,7 +1,7 @@
 anotation 
 RequestMapping : dùng để path api
 RequestBody : chuyen doi sever sang json
-@RequestParam: lay thong tin param xuong
-
+@RequestParam(value = "đsad"): lay thong tin param xuong
+@GetMaping((value = "đsad"))
 restcontroller = RequestBody + controller
 @pathValiable
