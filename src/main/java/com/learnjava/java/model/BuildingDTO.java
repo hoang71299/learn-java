@@ -1,10 +1,9 @@
-package com.learnjava.java.Beans;
+package com.learnjava.java.model;
 
 public class BuildingDTO {
     private String name;
     private Integer numberOfBasement;
-    private String ward;
-    private String street;
+    private String address;
 
     public String getName() {
         return name;
@@ -22,20 +21,12 @@ public class BuildingDTO {
         this.numberOfBasement = numberOfBasement;
     }
 
-    public String getWard() {
-        return ward;
+    public String getAddress() {
+        return address;
     }
 
-    public void setWard(String ward) {
-        this.ward = ward;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }
