@@ -32,8 +32,10 @@ public class BuildingAPI {
 
     // @RequestMapping(value = "/api/building/", method = RequestMethod.GET)
     @GetMapping(value = "/api/building/") // cu phap ngan gon
-    public List<BuildingDTO> getBuilding(@RequestParam(name = "name") String name) {
-        List<BuildingDTO> result = buildingService.findAll(name);
+    public List<BuildingDTO> getBuilding(@RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "districtid", required = false) Long district,
+            @RequestParam(name = "typeCode", required = false) List<String> typecode) {
+        List<BuildingDTO> result = buildingService.findAll(name, district);
         return result;
         // System.out.println(nameBuilding + " " + numberOfBasement);
     }
