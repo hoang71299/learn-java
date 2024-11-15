@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-    private static final Logger log = LoggerFactory.getLogger(StudentController.class);
     private final List<Student> students = new ArrayList<>(
             Arrays.asList(
                     new Student(1, "Hồ Văn Trung", 9.6),

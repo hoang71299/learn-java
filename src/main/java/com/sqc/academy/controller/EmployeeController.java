@@ -1,6 +1,11 @@
 package com.sqc.academy.controller;
 
 
+import com.sqc.academy.dto.ApiResponse;
+import com.sqc.academy.dto.JsonResponse;
+import com.sqc.academy.exception.ApiException;
+import com.sqc.academy.exception.AppException;
+import com.sqc.academy.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,24 +30,24 @@ public class EmployeeController {
                     )
             );
     @GetMapping()
-    public ResponseEntity<List<Employee>> getAll(){
-        return ResponseEntity.ok(employees);
+    public ResponseEntity<?> getAll(){
+        return JsonResponse.ok(employees);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getById(@PathVariable("id") UUID id){
-        for (Employee employee : employees){
-            if(employee.getId().equals(id)){
-                return ResponseEntity.ok(employee);
+    public ResponseEntity<?> getById(@PathVariable("id") UUID id) {
+        for (Employee employee : employees) {
+            if (employee.getId().equals(id)) {
+                return JsonResponse.ok(employee);
             }
         }
 
-        return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        throw new ApiException(ErrorCode.EMPLOYEE_NOT_EXIST);
     }
     @PostMapping
-    public ResponseEntity<Employee> save(@RequestBody Employee employee){
+    public ResponseEntity<?> save(@RequestBody Employee employee){
         employee.setId(UUID.randomUUID());
         employees.add(employee);
-        return ResponseEntity.status(HttpStatus.CREATED).body(employee);
+        return JsonResponse.created(employee);
     }
 
     @DeleteMapping("/{id}")
@@ -50,21 +55,22 @@ public class EmployeeController {
         for (Employee employee : employees){
             if(employee.getId().equals(id)){
                 employees.remove(employee);
-                return  ResponseEntity.ok().build();
+                return JsonResponse.noContent();
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+       throw  new AppException(ErrorCode.EMPLOYEE_NOT_EXIST);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateById(@PathVariable("id") UUID id, @RequestBody Employee updatedEmployee) {
+    public ResponseEntity<?> updateById(@PathVariable("id") UUID id, @RequestBody Employee updatedEmployee) {
         for (int i = 0; i < employees.size(); i++) {
             Employee existingEmployee = employees.get(i);
             if (existingEmployee.getId().equals(id)) {
                 updatedEmployee.setId(id); // giữ lại ID cũ
                 employees.set(i, updatedEmployee); // cập nhật thông tin
-                return ResponseEntity.ok(updatedEmployee);
+                return JsonResponse.ok(updatedEmployee);
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        throw  new AppException(ErrorCode.EMPLOYEE_NOT_EXIST);
     }
 }

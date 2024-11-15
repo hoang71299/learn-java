@@ -23,4 +23,15 @@ public class GlobalExceptionHandle {
                         .message(errorCode.getMessage())
                         .build());
     }
+
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<?> handleAppException(AppException e) {
+        ErrorCode errorCode = e.getErrorCode();
+
+        return ResponseEntity.status(errorCode.getStatus()).body(
+                ApiResponse.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build());
+    }
 }
